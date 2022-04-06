@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import AccountsList from './Accounts/AccountsList'
+import AccountsPage from './Accounts/AccountsPage'
 import './bootstrap/bootstrap.min.css'
 import './bootstrap/bootstrap.min.js'
 
@@ -12,7 +12,7 @@ function App() {
     switch (index) {
       case 0: return <p>Home</p>
       case 1: return <p>Items</p>
-      case 2: return <AccountsList />
+      case 2: return <AccountsPage />
       case 3: return <p>Categories</p>
     }
   }
