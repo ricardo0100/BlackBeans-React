@@ -41,7 +41,7 @@ function ColorPicker(props) {
   });
 
   return (
-    <div className="row justify-content-start pt-3">
+    <div className="row justify-content-center pt-3">
       {items}
     </div>
   )

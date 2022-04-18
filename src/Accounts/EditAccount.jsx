@@ -9,11 +9,7 @@ const EditAccount = forwardRef((props, ref) => {
   const [nameError, setNameError] = useState(null);
   const [color, setColor] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    saveAccount();
-  }
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
   useImperativeHandle(ref, () => ({
     updateAccount: (account) => {
@@ -36,9 +32,11 @@ const EditAccount = forwardRef((props, ref) => {
     modal.hide();
     setName('');
     setColor('');
+    setAccountId(null);
+    setShowDeleteAlert(false);
   }
 
-  function saveAccount() {
+  function saveAccount(isDeletion) {
     if (name.trim() == '') {
       setNameError('Name is required');
       return;
@@ -53,7 +51,7 @@ const EditAccount = forwardRef((props, ref) => {
 
     fetch(url, {
       method: method,
-      body: JSON.stringify({ name: name, color: color, lastSavedTime: 0, createdTime: 0, isActive: true }),
+      body: JSON.stringify({ name: name, color: color, lastSavedTime: 0, createdTime: 0, isActive: !isDeletion }),
       headers: new Headers({
         'Authorization': 'Bearer a16923f4-922d-4a87-96fb-9922442418a2',
         'Content-Type': 'application/json'
@@ -82,14 +80,24 @@ const EditAccount = forwardRef((props, ref) => {
     }
   }, []);
 
+  let title = accountId == null ? 'New account' : 'Edit account';
+
+  function DeleteButton() {
+    return accountId == null ? <span /> : <button hidden={showDeleteAlert} type='button' className='btn btn-danger float-start' onClick={() => setShowDeleteAlert(true)}>Excluir</button>;
+  }
+
+  function deleteAccount() {
+    saveAccount(true);
+  }
+
   return (
-    <div className='modal fade' id={props.target} data-bs-backdrop='static' data-bs-keyboard='false' tabIndex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>
+    <div className='modal fade modal-md' id={props.target} data-bs-backdrop='static' data-bs-keyboard='false' tabIndex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>
       <div className='modal-dialog'>
         <div className='modal-content'>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className='modal-header'>
-              <h5 className='modal-title' id='staticBackdropLabel'>New Account</h5>
-              <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close' disabled={loading}></button>
+              <h5 className='modal-title' id='staticBackdropLabel'>{title}</h5>
+              <button type='button' className='btn-close' aria-label='Close' disabled={loading || showDeleteAlert} onClick={closeModal}></button>
             </div>
             <div className='modal-body'>
               <label className={'form-label'} required>Name</label>
@@ -98,7 +106,15 @@ const EditAccount = forwardRef((props, ref) => {
               <ColorPicker callback={(color) => { setColor(color) }} selectedColor={color} />
             </div>
             <div className='modal-footer'>
-              <button type='submit' className='btn btn-primary' disabled={loading}>Save</button>
+              <DeleteButton />
+              <button type='button' className='btn btn-primary' hidden={loading || showDeleteAlert} onClick={() => saveAccount(false)}>Save</button>
+              <div className="w-100 alert alert-danger" role="alert" hidden={!showDeleteAlert}>
+                <h6 className='mb-3'>Are you sure you want to delete this account?</h6>
+                <div className='d-flex justify-content-end'>
+                  <button type='button' className='btn btn-light' onClick={() => setShowDeleteAlert(false)}>Cancel</button>
+                  <button type='button' className='btn btn-danger ms-3' onClick={() => deleteAccount()}>Delete</button>
+                </div>
+              </div>
             </div>
           </form>
         </div>
