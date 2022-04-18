@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import EditAccount from './EditAccount';
 import AccountsList from './AccountsList';
 
@@ -10,7 +10,15 @@ function AccountsPage() {
     accounts: []
   });
 
-  const handleCallback = useCallback(() => {
+  const childRef = useRef();
+
+  const handleKeyDown = (acount) => {
+    childRef.current.updateAccount(acount);
+  };
+
+  const modalId = 'editAccountModal';
+
+  const editAccountDidSaveCallback = useCallback(() => {
     fetchAccounts();
   }, []);
 
@@ -38,7 +46,7 @@ function AccountsPage() {
             accounts: []
           });
         }
-      )
+      );
   };
 
   useEffect(() => {
@@ -49,8 +57,14 @@ function AccountsPage() {
     if (state.loading == true) {
       return <p>Loading...</p>
     } else {
-      return <AccountsList accounts={state.accounts} />
+      return <AccountsList accounts={state.accounts} fetchAccounts={fetchAccounts} openEditAccount={handleKeyDown} />
     }
+  }
+
+  function openEditAccount(account) {
+    let element = document.getElementById(modalId);
+    var modal = bootstrap.Modal.getOrCreateInstance(element);
+    modal.show();
   }
 
   if (state.error != null) {
@@ -65,21 +79,19 @@ function AccountsPage() {
     return (
       <div className='container mt-3'>
         <div className='row'>
-          <div className='col-3'>
-            <h3>Accounts</h3>
+          <div className='col mb-3'>
+            <h1 className='float-start'>Accounts</h1>
+            <button type='button' className='btn btn-primary float-end' onClick={() => openEditAccount()}>
+              New account
+            </button>
           </div>
         </div>
         <div className='row'>
-          <div className='col-8'>
+          <div className='col'>
             {content()}
           </div>
-          <div className='col-4'>
-            <button type='button' className='btn btn-primary float-end' data-bs-toggle='modal' data-bs-target='#newAccountModal'>
-              New account
-            </button>
-            <EditAccount fetchAccounts={handleCallback} />
-          </div>
         </div>
+        <EditAccount ref={childRef} didSaveCallback={editAccountDidSaveCallback} target={modalId} />
       </div>
     );
   }
