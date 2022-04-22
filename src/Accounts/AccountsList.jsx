@@ -7,6 +7,11 @@ function AccountsList(props) {
     props.openEditAccount(account);
   }
 
+  var formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  });
+
   const items = props.accounts.map((account) => {
     return (
       <button className='list-group-item list-group-item-action' key={account.id} onClick={() => onAccountClick(account)}>
@@ -15,7 +20,7 @@ function AccountsList(props) {
           <div className="me-auto">
             <h5>{account.name}</h5>
           </div>
-          <p className='text-success'><b>R$ 2.123,44</b></p>
+          <p className='text-success'><b>{formatter.format(account.total)}</b></p>
         </div>
       </button>
     );

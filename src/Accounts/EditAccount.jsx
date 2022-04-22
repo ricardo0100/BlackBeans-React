@@ -46,8 +46,6 @@ const EditAccount = forwardRef((props, ref) => {
 
     let method = accountId == null ? 'POST' : 'PUT';
     let url = accountId == null ? 'http://127.0.0.1:5000/accounts' : 'http://127.0.0.1:5000/account/' + accountId;
-    console.log(method);
-    console.log(url);
 
     fetch(url, {
       method: method,
