@@ -1,8 +1,6 @@
-
-const Login = (props) => {
-
-  function showSignUp() {
-    props.showSignUp();
+const SignUp = (props) => {
+  function showLogin() {
+    props.showLogin();
   }
 
   return (
@@ -15,7 +13,7 @@ const Login = (props) => {
       <div className="container">
         <div className="row justify-content-center mt-3">
           <div className="col-lg-4">
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
           </div>
         </div>
         <div className="row justify-content-center mt-3">
@@ -28,8 +26,8 @@ const Login = (props) => {
               <label htmlFor="inputPassword" className="form-label">Password</label>
               <input type="password" className="form-control" id="inputPassword" />
             </div>
-            <button type="submit" className="btn btn-secondary" onClick={() => showSignUp()}>Sign Up</button>
-            <button type="submit" className="btn btn-primary float-end">Login</button>
+            <button type="button" className="btn btn-secondary" onClick={() => showLogin()}>Log in</button>
+            <button type="button" className="btn btn-primary float-end">Submit</button>
           </form>
         </div>
       </div>
@@ -37,4 +35,4 @@ const Login = (props) => {
   );
 }
 
-export default Login;
+export default SignUp;

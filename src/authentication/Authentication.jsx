@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import Login from './Login';
+import SignUp from './SignUp';
 
 const Authentication = () => {
   const [isLogin, setIsLogin] = useState(true);
 
-  function Content() {
+  function Contents() {
     if (isLogin) {
       return <Login showSignUp={ () => setIsLogin(false) } />
     } else {
-      return <button onClick={() => setIsLogin(true)}>Go to Login</button>
+      return <SignUp showLogin={ () => setIsLogin(true) } />
     }
   }
 
-  return <Content />
+  return <Contents />
 }
 
 export default Authentication;

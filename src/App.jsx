@@ -1,5 +1,5 @@
 import LoggedApp from "./LoggedApp";
-import Authentication from './Authentication';
+import Authentication from './authentication/Authentication';
 import './assets/bootstrap.min.css';
 import './assets/bootstrap.min.js';
 
@@ -11,6 +11,7 @@ const App = () => {
     }
     return <Authentication />
   }
+
   return (
     <Content />
   );
