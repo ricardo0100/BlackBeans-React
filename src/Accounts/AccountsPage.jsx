@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import EditAccount from './EditAccount';
 import AccountsList from './AccountsList';

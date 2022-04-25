@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import ColorPicker from './ColorPicker';
 

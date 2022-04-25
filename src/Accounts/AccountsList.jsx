@@ -1,5 +1,4 @@
-import React from 'react'
-import { useCallback } from 'react';
+import React from 'react';
 
 function AccountsList(props) {
 
@@ -13,14 +12,15 @@ function AccountsList(props) {
   });
 
   const items = props.accounts.map((account) => {
+    let sumColor = account.total >= 0 ? 'text-success' : 'text-danger';
     return (
-      <button className='list-group-item list-group-item-action' key={account.id} onClick={() => onAccountClick(account)}>
-        <div className="hstack gap-4">
+      <button className='list-group-item list-group-item-action ps-0 pe-0' key={account.id} onClick={() => onAccountClick(account)}>
+        <div className="hstack gap-1">
           <i className="bi-circle-fill" style={{ color: account.color }} />
-          <div className="me-auto">
-            <h5>{account.name}</h5>
+          <div className="me-auto m-1">
+            <p className='mb-0'>{account.name}</p>
           </div>
-          <p className='text-success'><b>{formatter.format(account.total)}</b></p>
+          <p className='mb-0'><b className={sumColor}>{formatter.format(account.total)}</b></p>
         </div>
       </button>
     );
