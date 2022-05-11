@@ -1,7 +1,7 @@
 import LoggedApp from "./LoggedApp";
 import Authentication from './authentication/Authentication';
-import './assets/bootstrap.min.css';
-import './assets/bootstrap.min.js';
+// import './assets/bootstrap.min.css';
+// import './assets/bootstrap.min.js';
 
 const App = () => {
   function Content() {

@@ -6,6 +6,7 @@ const Authentication = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   function Contents() {
+
     if (isLogin) {
       return <Login showSignUp={ () => setIsLogin(false) } />
     } else {
